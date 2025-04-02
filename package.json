@@ -1,0 +1,20 @@
+{
+  "name": "router_reboot",
+  "version": "1.0.0",
+  "description": "Pinging and rebooting router",
+  "main": "router_reboot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
+    "node-rsa": "^1.1.1",
+    "ping": "^0.4.4"
+  },
+  "type": "module"
+}
