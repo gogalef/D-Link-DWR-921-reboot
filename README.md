@@ -24,7 +24,6 @@ any legal questions or consequences arising from the use of this code.
 
 ## 🧑‍💻 About Code Quality
 
-```text
 Yes, I'm perfectly aware there are many non-ideal solutions here.
 But this code was born from a simple principle: "If it works, don't touch it!"
 
