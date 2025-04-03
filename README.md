@@ -50,14 +50,14 @@ This script:
 
 ## 🛠️ Installation
 
-# 1. Ensure you have Node.js (v14+) installed
-# 2. Clone this repository:
+### 1. Ensure you have Node.js (v14+) installed
+### 2. Clone this repository:
 git clone https://github.com/gogalef/D-Link-DWR-921-reboot.git
 
-# 3. Navigate to the project directory:
+### 3. Navigate to the project directory:
 cd D-Link-DWR-921-reboot
 
-# 4. Install dependencies:
+### 4. Install dependencies:
 npm install
 
 ## ⚙️ Configuration
