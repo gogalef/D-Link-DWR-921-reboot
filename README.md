@@ -22,23 +22,6 @@ to someone in similar situation.
 NO SUPPORT WILL BE PROVIDED. The author explicitly disclaims all responsibility for
 any legal questions or consequences arising from the use of this code.
 
-## 🧑‍💻 About Code Quality
-
-Yes, I'm perfectly aware there are many non-ideal solutions here.
-But this code was born from a simple principle: "If it works, don't touch it!"
-
-When you need to choose between:
-- Spending 2 hours on "pretty" code
-- Or 20 minutes on "working" code
-- And getting the same functioning router
-
-The choice is obvious. I understand the difference between when code should be:
-- Perfect (production, commercial projects)
-- And "good enough" (personal utilities, quick hacks)
-
-This script is definitely the second case. It does exactly what it's supposed to,
-and makes no claims to being "exemplary". To hell with clean code 
-when the internet is working again! 
 
 ## 📝 Description
 
@@ -73,6 +56,24 @@ PING_TARGET=8.8.8.8
 
 # Run the script:
 node router_reboot.js
+
+## 🧑‍💻 About Code Quality
+
+Yes, I'm perfectly aware there are many non-ideal solutions here.
+But this code was born from a simple principle: "If it works, don't touch it!"
+
+When you need to choose between:
+- Spending 2 hours on "pretty" code
+- Or 20 minutes on "working" code
+- And getting the same functioning router
+
+The choice is obvious. I understand the difference between when code should be:
+- Perfect (production, commercial projects)
+- And "good enough" (personal utilities, quick hacks)
+
+This script is definitely the second case. It does exactly what it's supposed to,
+and makes no claims to being "exemplary". To hell with clean code 
+when the internet is working again! 
 
 ## 🔧 Customization
 
