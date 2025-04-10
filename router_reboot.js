@@ -15,12 +15,15 @@ const ROUTER_USERNAME = process.env.ROUTER_USERNAME; // Имя пользова�
 global.ROUTER_PASSWORD = process.env.ROUTER_PASSWORD; // Пароль роутера
 const PING_TARGET = process.env.PING_TARGET; // Адрес для проверки интернета (например, Google DNS)
 const publicKeyPem = '';
+const INTERNET_CHECK_INTERVAL =   30 * 1000; // Каждые 30 секунд
+const REBOOT_INTERVAL = 8 * 60 * 1000; //  8 минут
 
 let cookie = "";
 global.priv_key = generatePrivateKey();
 global.dp = '';
 global.pwenc = '';
 global.pub_key = '' ;
+let Interval = null;
 
 // Создаем кастомный httpsAgent, который игнорирует ошибки сертификата
 const httpsAgent = new https.Agent({
@@ -179,35 +182,19 @@ async function loginRouter() {
     }
 }
 
-
-// Основная функция
-
-
-
-// Запуск основной функции
-async function main()           {
+async function checkAndReboot()
+{
+    if(!Interval)
+    {
+        return;
+    }
     let isInternetAlive = await checkInternet();
     if (!isInternetAlive) {
-        let timestamp = (new Date()).toLocaleString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        });
-        console.log( '[' + timestamp + ']' );
-        console.log('Интернет недоступен. Пытаюсь перезагрузить роутер...');
-        await getPubKey();
-        await sleep(500);
-        await before_login();
-        await loginRouter();
-        await sleep(500);
-        await rebootRouter();
+        rebootingInternet();
     }
     else
     {
+        console.log('checkAndReboot');
         let timestamp = (new Date()).toLocaleString('ru-RU', {
             day: '2-digit',
             month: '2-digit',
@@ -220,42 +207,50 @@ async function main()           {
         console.log( '[' + timestamp + ']' );
         console.log('Интернет доступен. Иди ка ты нахрен');
     }
-    setInterval(async () => {
-        isInternetAlive = await checkInternet();
-        if (!isInternetAlive) {
-            let timestamp = (new Date()).toLocaleString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            console.log( '[' + timestamp + ']' );
-            console.log('Интернет недоступен. Пытаюсь перезагрузить роутер...');
-            await getPubKey();
-            await sleep(500);
-            await before_login();
-            await loginRouter();
-            await sleep(500);
-            await rebootRouter();
-        }
-        else
-        {
-            let timestamp = (new Date()).toLocaleString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            console.log( '[' + timestamp + ']' );
-            console.log('Интернет доступен. Иди ка ты нахрен');
-        }
-    }, 8 * 60 * 1000); // Каждые 8 минут
+}
+
+async function rebootingInternet()
+{
+    let timestamp = (new Date()).toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+    console.log( '[' + timestamp + ']' );
+    console.log('Интернет недоступен. Пытаюсь перезагрузить роутер...');
+    await getPubKey();
+    await sleep(500);
+    await before_login();
+    await loginRouter();
+    await sleep(500);
+    await rebootRouter();
+    internetRebooted();
+}
+
+function internetRebooted()
+{
+    clearInterval(Interval);
+    Interval = null;
+    setTimeout(() => {
+        Interval = setInterval(async () => checkAndReboot(), INTERNET_CHECK_INTERVAL);
+    }, REBOOT_INTERVAL)
+}
+
+
+// Основная функция
+
+
+
+// Запуск основной функции
+async function main()
+{
+    Interval = setInterval(async () => checkAndReboot(), INTERNET_CHECK_INTERVAL);
+    checkAndReboot();
+    console.log(Interval);
 
 }
 main();
